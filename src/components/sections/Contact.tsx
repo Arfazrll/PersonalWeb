@@ -1,10 +1,11 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiMapPin, FiLinkedin, FiGithub, FiSend } from 'react-icons/fi';
 import { personalInfo } from '@/utils/data';
 import Card from '../ui/Card';
 
 const Contact = () => {
+  // Form state
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,6 +17,76 @@ const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  // Animation visibility states
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const [infoVisible, setInfoVisible] = useState(false);
+  const [formVisible, setFormVisible] = useState(false);
+
+  // Setup intersection observers for animation triggers
+  useEffect(() => {
+    // Observer for section header
+    const headerElement = document.getElementById('contact-header');
+    if (headerElement) {
+      const headerObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setHeaderVisible(true);
+            headerObserver.disconnect();
+          }
+        },
+        { threshold: 0.2, rootMargin: '0px' }
+      );
+      
+      headerObserver.observe(headerElement);
+      
+      // Cleanup
+      return () => headerObserver.disconnect();
+    }
+  }, []);
+  
+  useEffect(() => {
+    // Observer for contact info section
+    const infoElement = document.getElementById('contact-info');
+    if (infoElement) {
+      const infoObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setInfoVisible(true);
+            infoObserver.disconnect();
+          }
+        },
+        { threshold: 0.2, rootMargin: '0px' }
+      );
+      
+      infoObserver.observe(infoElement);
+      
+      // Cleanup
+      return () => infoObserver.disconnect();
+    }
+  }, []);
+  
+  useEffect(() => {
+    // Observer for contact form section
+    const formElement = document.getElementById('contact-form');
+    if (formElement) {
+      const formObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setFormVisible(true);
+            formObserver.disconnect();
+          }
+        },
+        { threshold: 0.2, rootMargin: '0px' }
+      );
+      
+      formObserver.observe(formElement);
+      
+      // Cleanup
+      return () => formObserver.disconnect();
+    }
+  }, []);
+
+  // Form handlers
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -52,9 +123,9 @@ const Contact = () => {
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <motion.div
+          id="contact-header"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={headerVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
@@ -67,9 +138,9 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Contact Info */}
           <motion.div
+            id="contact-info"
             initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={infoVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             transition={{ duration: 0.5 }}
             className="lg:col-span-2"
           >
@@ -159,9 +230,9 @@ const Contact = () => {
           
           {/* Contact Form */}
           <motion.div
+            id="contact-form"
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={formVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="lg:col-span-3"
           >

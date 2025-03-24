@@ -2,9 +2,38 @@ import { motion } from 'framer-motion';
 import { FiAward, FiChevronRight, FiExternalLink } from 'react-icons/fi';
 import { certifications } from '@/utils/data';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useEffect, useState } from 'react';
 
 const Certifications = () => {
-  const { ref, controls } = useScrollAnimation();
+  // Menggunakan hook dengan properti yang benar
+  const { ref, inView } = useScrollAnimation();
+  
+  // State untuk mengontrol animasi section title
+  const [sectionVisible, setSectionVisible] = useState(false);
+
+  // Effect untuk deteksi section title visibility dengan Intersection Observer API
+  useEffect(() => {
+    // Membuat referensi ke element dengan ID certifications-title
+    const sectionTitle = document.getElementById('certifications-title');
+    if (!sectionTitle) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setSectionVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2, rootMargin: '0px' }
+    );
+    
+    observer.observe(sectionTitle);
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   // Animation variants
   const containerVariants = {
@@ -31,9 +60,9 @@ const Certifications = () => {
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <motion.div
+          id="certifications-title"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={sectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
@@ -47,7 +76,7 @@ const Certifications = () => {
         <motion.div
           ref={ref}
           initial="hidden"
-          animate={controls ? "visible" : "hidden"}
+          animate={inView ? "visible" : "hidden"}
           variants={containerVariants}
           className="max-w-4xl mx-auto"
         >

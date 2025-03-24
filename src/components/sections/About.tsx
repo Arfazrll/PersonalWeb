@@ -3,9 +3,63 @@ import { FiMapPin, FiMail, FiCalendar } from 'react-icons/fi';
 import { personalInfo } from '@/utils/data';
 import Card from '../ui/Card';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useEffect, useState } from 'react';
 
 const About = () => {
-  const { ref, controls } = useScrollAnimation();
+  // Menggunakan hook yang sudah ada dengan benar
+  const { ref, inView } = useScrollAnimation();
+  
+  // State untuk mengontrol animasi masing-masing bagian
+  const [sectionVisible, setSectionVisible] = useState(false);
+  const [aboutVisible, setAboutVisible] = useState(false);
+  
+  // Effect untuk deteksi section title visibility dengan Intersection Observer API
+  useEffect(() => {
+    // Membuat referensi ke element dengan ID section-title
+    const sectionTitle = document.getElementById('section-title');
+    if (!sectionTitle) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setSectionVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2, rootMargin: '0px' }
+    );
+    
+    observer.observe(sectionTitle);
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+  
+  // Effect untuk deteksi about content visibility dengan Intersection Observer API
+  useEffect(() => {
+    // Membuat referensi ke element dengan ID about-content
+    const aboutContent = document.getElementById('about-content');
+    if (!aboutContent) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setAboutVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2, rootMargin: '0px' }
+    );
+    
+    observer.observe(aboutContent);
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   // Animation variants
   const containerVariants = {
@@ -32,9 +86,9 @@ const About = () => {
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <motion.div
+          id="section-title"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={sectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
@@ -46,7 +100,7 @@ const About = () => {
           <motion.div
             ref={ref}
             initial="hidden"
-            animate={controls ? "visible" : "hidden"}
+            animate={inView ? "visible" : "hidden"}
             variants={containerVariants}
             className="space-y-8"
           >
@@ -96,9 +150,9 @@ const About = () => {
 
           {/* About Text */}
           <motion.div
+            id="about-content"
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={aboutVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="space-y-6"
           >

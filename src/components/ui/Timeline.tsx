@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface TimelineItem {
@@ -24,6 +24,38 @@ const Timeline: React.FC<TimelineProps> = ({
   alternating = false,
   className = ''
 }) => {
+  // State untuk mengontrol visibility animasi
+  const [isVisible, setIsVisible] = useState(false);
+  
+  // Ref untuk container timeline
+  const timelineRef = useRef<HTMLDivElement>(null);
+  
+  // Set up IntersectionObserver untuk mendeteksi ketika timeline masuk viewport
+  useEffect(() => {
+    const currentRef = timelineRef.current;
+    if (!currentRef) return;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Berhenti mengobservasi setelah terlihat
+        }
+      },
+      {
+        threshold: 0.1, // Trigger ketika minimal 10% element terlihat
+        rootMargin: '0px' // Tidak ada margin tambahan
+      }
+    );
+    
+    observer.observe(currentRef);
+    
+    // Cleanup observer pada unmount
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -51,9 +83,9 @@ const Timeline: React.FC<TimelineProps> = ({
       )}
       
       <motion.div
+        ref={timelineRef}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        animate={isVisible ? "visible" : "hidden"}
         variants={containerVariants}
         className={alternating ? 'relative' : 'timeline-container'}
       >

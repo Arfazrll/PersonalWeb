@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply text-secondary-800 dark:text-secondary-200 bg-white dark:bg-secondary-950 font-sans;
+    transition: color 0.2s, background-color 0.2s;
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  /* Custom scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary-100 dark:bg-secondary-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-secondary-300 dark:bg-secondary-700 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-secondary-400 dark:bg-secondary-600;
+  }
+  
+  /* Common text styles */
+  .heading-1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 dark:text-white;
+  }
+  
+  .heading-2 {
+    @apply text-3xl md:text-4xl font-bold text-secondary-900 dark:text-white;
+  }
+  
+  .heading-3 {
+    @apply text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white;
+  }
+  
+  .section-title {
+    @apply text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white mb-6 relative inline-block;
+  }
+  
+  .section-title::after {
+    content: '';
+    @apply absolute left-0 -bottom-2 w-2/3 h-1 bg-primary-600 dark:bg-primary-500 rounded;
+  }
+  
+  /* Container styles */
+  .container-custom {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+  
+  /* Button styles */
+  .btn-primary {
+    @apply px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-secondary-900;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-white hover:bg-secondary-50 text-primary-600 border border-secondary-200 dark:border-secondary-700 dark:bg-secondary-800 dark:text-primary-400 dark:hover:bg-secondary-700 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-secondary-900;
+  }
+  
+  .btn-outline {
+    @apply px-6 py-3 bg-transparent hover:bg-primary-600/10 text-primary-600 dark:text-primary-400 border border-primary-600 dark:border-primary-400 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-secondary-900;
+  }
+  
+  /* Card styles */
+  .card {
+    @apply bg-white dark:bg-secondary-800 rounded-xl shadow-lg border border-secondary-100 dark:border-secondary-700 p-6 transition-all duration-300;
+  }
+  
+  .card-hover {
+    @apply hover:shadow-xl hover:-translate-y-1 transition-all duration-300;
+  }
+  
+  /* Image container */
+  .img-container {
+    @apply relative overflow-hidden rounded-lg;
+  }
+  
+  .img-zoom {
+    @apply transition-transform duration-500 hover:scale-110;
+  }
+  
+  /* Timeline */
+  .timeline-container {
+    @apply relative border-l-2 border-primary-600 dark:border-primary-500 pl-6 ml-3;
+  }
+  
+  .timeline-dot {
+    @apply absolute w-4 h-4 bg-primary-600 dark:bg-primary-500 rounded-full -left-[9px] mt-1.5;
+  }
+  
+  .timeline-item {
+    @apply mb-8 last:mb-0;
+  }
+  
+  /* Skill badges */
+  .skill-badge {
+    @apply px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 dark:bg-primary-900/30 dark:text-primary-300 transition-colors duration-300;
+  }
+  
+  /* Glassmorphism */
+  .glass-card {
+    @apply bg-white/80 dark:bg-secondary-900/80 backdrop-blur-md border border-white/20 dark:border-secondary-700/30 rounded-xl shadow-lg;
+  }
+  
+  /* Nav links */
+  .nav-link {
+    @apply relative px-3 py-2 text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200;
+  }
+  
+  .nav-link::after {
+    content: '';
+    @apply absolute w-0 h-0.5 bg-primary-600 dark:bg-primary-400 left-0 bottom-0 transition-all duration-300;
+  }
+  
+  .nav-link:hover::after, .nav-link.active::after {
+    @apply w-full;
+  }
+  
+  .nav-link.active {
+    @apply text-primary-600 dark:text-primary-400 font-medium;
+  }
+  
+  /* Typing effect for hero section */
+  .typing {
+    @apply overflow-hidden whitespace-nowrap border-r-2 border-primary-500 animate-typing;
+    width: 0;
+  }
+}
+
+@layer utilities {
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-accent-500 dark:from-primary-400 dark:to-accent-400;
+  }
+  
+  /* Background gradient */
+  .bg-gradient {
+    @apply bg-gradient-to-br from-primary-600 to-accent-500 dark:from-primary-500 dark:to-accent-500;
+  }
+  
+  /* Blur behind element */
+  .backdrop-blur {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}

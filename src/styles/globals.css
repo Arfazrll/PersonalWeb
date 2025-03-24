@@ -9,7 +9,7 @@
   }
   
   body {
-    @apply text-secondary-800 dark:text-secondary-200 bg-white dark:bg-secondary-950 font-sans;
+    @apply text-secondary-800 dark:text-secondary-200 bg-white dark:bg-true-black font-sans;
     transition: color 0.3s, background-color 0.3s;
     overflow-x: hidden;
     position: relative;
@@ -27,6 +27,11 @@
   /* Focus styles */
   :focus-visible {
     @apply outline-none ring-2 ring-primary-600 dark:ring-primary-400 ring-offset-2 dark:ring-offset-secondary-900;
+  }
+  
+  /* Smooth transitions for theme changes */
+  * {
+    @apply transition-colors duration-200;
   }
 }
 
@@ -46,7 +51,7 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-secondary-400 dark:bg-secondary-600;
+    @apply bg-primary-400 dark:bg-primary-600;
   }
 
   /* Custom scrollbar class for components */
@@ -80,9 +85,18 @@
     @apply text-2xl md:text-3xl font-bold text-secondary-900 dark:text-white mb-6 relative inline-block;
   }
   
+  /* Enhanced section title with animated underline */
   .section-title::after {
     content: '';
-    @apply absolute left-0 -bottom-2 w-2/3 h-1 bg-primary-600 dark:bg-primary-500 rounded;
+    @apply absolute left-0 -bottom-2 h-1 bg-primary-600 dark:bg-primary-500 rounded;
+    width: 0;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: expand-line 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  
+  @keyframes expand-line {
+    0% { width: 0; }
+    100% { width: 66.666%; }
   }
 
   /* Badge and tag styles */
@@ -111,7 +125,7 @@
     @apply py-16 md:py-24;
   }
   
-  /* Button styles */
+  /* Button styles - Keep for non-component use */
   .btn-primary {
     @apply px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-secondary-900;
   }
@@ -139,7 +153,7 @@
   
   /* Social icon style */
   .social-icon-wrapper {
-    @apply w-10 h-10 flex items-center justify-center rounded-full bg-secondary-100 dark:bg-secondary-800 text-secondary-600 dark:text-secondary-400 hover:bg-primary-100 hover:text-primary-600 dark:hover:bg-primary-900/20 dark:hover:text-primary-400 transition-colors;
+    @apply w-10 h-10 flex items-center justify-center rounded-full bg-secondary-100 dark:bg-secondary-800 text-secondary-600 dark:text-secondary-400 hover:bg-primary-100 hover:text-primary-600 dark:hover:bg-primary-900/20 dark:hover:text-primary-400 transition-all duration-300 shadow-sm hover:shadow-md;
   }
 
   .social-icon {
@@ -152,7 +166,12 @@
   }
   
   .card-hover {
-    @apply hover:shadow-xl hover:-translate-y-1 transition-all duration-300;
+    @apply hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-primary-300 dark:hover:border-primary-700;
+  }
+  
+  /* Enhanced card with glow */
+  .card-glow {
+    @apply hover:shadow-glow dark:hover:shadow-glow-strong border-transparent;
   }
   
   /* Image container */
@@ -179,7 +198,7 @@
   
   /* Skill badges */
   .skill-badge {
-    @apply px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 dark:bg-primary-900/30 dark:text-primary-300 transition-colors duration-300;
+    @apply px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 dark:bg-primary-900/30 dark:text-primary-300 transition-colors duration-300 hover:bg-primary-200 dark:hover:bg-primary-900/50;
   }
   
   /* Glassmorphism */
@@ -218,27 +237,6 @@
     @apply mt-1 text-sm text-red-600 dark:text-red-400;
   }
 
-  /* Animations */
-  .fade-in {
-    @apply animate-fade-in;
-  }
-
-  .slide-up {
-    @apply animate-slide-up;
-  }
-
-  .slide-down {
-    @apply animate-slide-down;
-  }
-
-  .slide-in-right {
-    @apply animate-slide-in-right;
-  }
-
-  .slide-in-left {
-    @apply animate-slide-in-left;
-  }
-
   /* Tooltip */
   .tooltip {
     @apply relative inline-block;
@@ -264,6 +262,77 @@
 
   .dark .tooltip-text::after {
     border-top-color: theme('colors.secondary.800');
+  }
+  
+  /* Enhanced ripple effect */
+  @keyframes ripple {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: 0.8;
+    }
+    100% {
+      width: 500px;
+      height: 500px;
+      opacity: 0;
+    }
+  }
+  
+  .animate-ripple {
+    animation: ripple 0.8s ease-out;
+  }
+  
+  /* Custom animated gradient backgrounds */
+  .gradient-animate {
+    background-size: 400% 400%;
+    animation: gradient-shift 8s ease infinite;
+  }
+  
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Enhanced Glowing effect for elements */
+  .glow-effect {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .glow-effect::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -2px;
+    background: linear-gradient(45deg, 
+      theme('colors.primary.500'), 
+      theme('colors.accent.500'),
+      theme('colors.primary.500'));
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    filter: blur(8px);
+  }
+  
+  .glow-effect:hover::before {
+    opacity: 0.7;
+  }
+  
+  /* True black mode specific styles */
+  .dark .true-black-bg {
+    background-color: #000000;
+  }
+  
+  /* High contrast mode */
+  .high-contrast {
+    @apply dark:text-white text-black;
   }
 }
 
@@ -365,8 +434,113 @@
         transparent 1px
       );
   }
+  
+  /* Enhanced shine effect */
+  .shine-effect {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shine-effect::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    transform: rotate(30deg);
+    animation: shine 6s ease-in-out infinite;
+  }
+  
+  @keyframes shine {
+    0% {
+      transform: scale(0.5) rotate(30deg) translateX(-200%);
+    }
+    100% {
+      transform: scale(0.5) rotate(30deg) translateX(200%);
+    }
+  }
+  
+  /* New vibrating animation for attention */
+  .vibrate {
+    animation: vibrate 0.3s linear infinite;
+  }
+  
+  @keyframes vibrate {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+  }
+  
+  /* Typewriter effect */
+  .typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end);
+  }
+  
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  /* 3D text effect */
+  .text-3d {
+    text-shadow: 0px 1px 0px rgba(255,255,255,.3),
+                 0px -1px 0px rgba(0,0,0,.7);
+  }
+  
+  .dark .text-3d {
+    text-shadow: 0px 1px 0px rgba(0,0,0,.7),
+                 0px -1px 0px rgba(255,255,255,.3);
+  }
+  
+  /* Neon glow effect */
+  .neon-text {
+    @apply text-primary-500 dark:text-primary-400;
+    text-shadow: 0 0 5px theme('colors.primary.400'),
+                0 0 10px theme('colors.primary.400'),
+                0 0 20px theme('colors.primary.500'),
+                0 0 40px theme('colors.primary.600');
+  }
+  
+  /* Enhanced hover transitions */
+  .hover-lift {
+    @apply transition-transform duration-300;
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-1;
+  }
+  
+  /* Scale effect */
+  .scale-on-hover {
+    @apply transition-transform duration-300;
+  }
+  
+  .scale-on-hover:hover {
+    @apply scale-105;
+  }
+  
+  /* Rotating animation */
+  .rotate-slow {
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 }
-
 
 /* Add these animation classes to your globals.css file */
 
@@ -524,238 +698,77 @@
   filter: brightness(1.1);
 }
 
-/* Add these CSS animations to your globals.css file */
+/* Enhanced animations for portfolio */
 
-/* Animation keyframes */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes rotateIn {
-  from {
-    opacity: 0;
-    transform: rotate(-10deg) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: rotate(0) scale(1);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
+/* Float animation */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink {
-  50% { border-color: transparent }
-}
-
-/* Animation utility classes */
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.5s ease-out forwards;
-}
-
-.animate-scale-up {
-  animation: scaleUp 0.5s cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
-}
-
-.animate-rotate-in {
-  animation: rotateIn 0.5s ease-out forwards;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.5s ease-out forwards;
-}
-
-.animate-slide-in-left {
-  animation: slideInLeft 0.5s ease-out forwards;
-}
-
-.animate-pulse {
-  animation: pulse 2s ease-in-out infinite;
+  50% { transform: translateY(-20px); }
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradientShift 8s linear infinite;
+/* Breathe animation */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
-.animate-rotate {
-  animation: rotate 40s linear infinite;
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
 }
 
-/* Animation delays */
-.delay-100 {
-  animation-delay: 100ms;
+/* Shimmer animation */
+@keyframes shimmer {
+  0% { backgroundPosition: '-500px 0' }
+  100% { backgroundPosition: '500px 0' }
 }
 
-.delay-200 {
-  animation-delay: 200ms;
+.animate-shimmer {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+  background-size: 500px 100%;
+  animation: shimmer 2.5s infinite;
 }
 
-.delay-300 {
-  animation-delay: 300ms;
+/* Orbit animation */
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
 }
 
-.delay-400 {
-  animation-delay: 400ms;
+.animate-orbit {
+  animation: orbit 12s linear infinite;
 }
 
-.delay-500 {
-  animation-delay: 500ms;
+/* Wave animation for interactions */
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
 }
 
-/* Interactive classes */
-.hover-lift {
-  transition: transform 0.3s ease;
+.animate-wave {
+  animation: wave 2.5s ease-in-out infinite;
+  transform-origin: 70% 70%;
 }
 
-.hover-lift:hover {
-  transform: translateY(-5px);
+/* Enhanced cursor for interactive elements */
+.cursor-effect {
+  cursor: pointer;
 }
 
-.hover-scale {
-  transition: transform 0.3s ease;
+/* Dark mode enhanced effects */
+.dark .glow-text {
+  text-shadow: 0 0 8px rgba(99, 102, 241, 0.8);
 }
 
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-.hover-bright {
-  transition: filter 0.3s ease;
-}
-
-.hover-bright:hover {
-  filter: brightness(1.1);
-}
-
-/* Text gradient */
-.text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-accent-500 dark:from-primary-400 dark:to-accent-400;
-}
-
-/* Social icon styling */
-.social-icon-wrapper {
-  @apply w-10 h-10 flex items-center justify-center rounded-full bg-secondary-100 dark:bg-secondary-800 text-secondary-600 dark:text-secondary-400 hover:bg-primary-100 hover:text-primary-600 dark:hover:bg-primary-900/20 dark:hover:text-primary-400 transition-colors;
-}
-
-.social-icon {
-  @apply w-5 h-5;
-}
-
-/* Button hover effect */
-.btn-hover-effect {
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-hover-effect::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
-
-.btn-hover-effect:hover::after {
-  transform: translateX(0);
-}
-
-/* Adding a custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-secondary-100 dark:bg-secondary-800;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-secondary-300 dark:bg-secondary-700 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-secondary-400 dark:bg-secondary-600;
+.dark .card-highlight {
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
 }

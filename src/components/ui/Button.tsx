@@ -89,22 +89,22 @@ const Button: React.FC<ButtonProps> = ({
     // Variant classes
     switch (variant) {
       case 'primary':
-        classes += ' bg-primary-600 hover:bg-primary-700 text-white shadow-md hover:shadow-lg dark:bg-primary-600 dark:hover:bg-primary-700';
+        classes += ' bg-primary-500 hover:bg-primary-600 text-white shadow-sm hover:shadow-md';
         break;
       case 'secondary':
-        classes += ' bg-white hover:bg-secondary-50 text-secondary-700 border border-secondary-200 shadow-sm hover:shadow-md dark:bg-secondary-800 dark:border-secondary-700 dark:text-secondary-300 dark:hover:bg-secondary-700';
+        classes += ' bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 shadow-sm hover:shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700';
         break;
       case 'outline':
-        classes += ' bg-transparent hover:bg-primary-50 text-primary-600 border border-primary-600 dark:text-primary-400 dark:border-primary-400 dark:hover:bg-primary-900/20';
+        classes += ' bg-transparent hover:bg-primary-50 text-primary-500 border border-primary-500 dark:text-primary-400 dark:border-primary-400 dark:hover:bg-primary-900/20';
         break;
       case 'glass':
         classes += ' bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border border-white/30 shadow-sm hover:shadow-md';
         break;
       case 'accent':
-        classes += ' bg-accent-500 hover:bg-accent-600 text-white shadow-md hover:shadow-lg dark:bg-accent-600 dark:hover:bg-accent-700';
+        classes += ' bg-accent-500 hover:bg-accent-600 text-white shadow-sm hover:shadow-md';
         break;
       default:
-        classes += ' bg-primary-600 hover:bg-primary-700 text-white shadow-md hover:shadow-lg';
+        classes += ' bg-primary-500 hover:bg-primary-600 text-white shadow-sm hover:shadow-md';
     }
     
     // Disabled state
@@ -139,9 +139,9 @@ const Button: React.FC<ButtonProps> = ({
     </>
   );
 
-  // Animation properties - TYPE-SAFE IMPLEMENTATION
+  // Animation properties
   const motionProps = {
-    whileHover: disabled ? undefined : { scale: 1.03 },
+    whileHover: disabled ? undefined : { scale: 1.02 },
     whileTap: disabled ? undefined : { scale: 0.98 },
     transition: { type: "spring", stiffness: 400, damping: 17 }
   };

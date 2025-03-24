@@ -10,9 +10,13 @@ import Contact from '@/components/sections/Contact';
 import { personalInfo } from '@/utils/data';
 
 export default function Home() {
-  // Smooth scroll to section when clicking on nav links
+  // Force scroll to top on initial load
   useEffect(() => {
-    const handleNavLinkClick = (event: Event) => {
+    // Reset scroll position to top on initial load
+    window.scrollTo(0, 0);
+    
+    // Smooth scroll to section when clicking on nav links
+    const handleNavLinkClick = (event: MouseEvent) => {
       const target = event.target as HTMLAnchorElement;
       
       if (target.hash && target.hash.startsWith('#')) {
@@ -51,7 +55,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <main>
+      <main className="bg-white dark:bg-true-black text-gray-900 dark:text-white">
         <Hero />
         <About />
         <Experience />

@@ -1,37 +1,50 @@
+// src/components/ui/PageLoader.tsx
 import React, { useEffect, useState } from 'react';
 
 const PageLoader: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  // Handle initial fade-in
+  // Handle initial fade-in and progress animation
   useEffect(() => {
     // Set a small delay before showing to allow for transition
-    const timer = setTimeout(() => {
+    const visibilityTimer = setTimeout(() => {
       setIsVisible(true);
     }, 10);
 
-    return () => clearTimeout(timer);
+    // Simulate loading progress
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        const newProgress = prev + (100 - prev) / 10;
+        return Math.min(newProgress, 100);
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(visibilityTimer);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-white dark:bg-secondary-950"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-white dark:bg-true-black"
       style={{
         opacity: isVisible ? 1 : 0,
         transition: 'opacity 0.3s ease-in-out'
       }}
     >
       <div className="flex flex-col items-center">
-        {/* Logo spinner */}
+        {/* Logo spinner with blue theme */}
         <div className="relative">
           <div
-            className="w-16 h-16 rounded-full border-4 border-secondary-200 dark:border-secondary-800"
+            className="w-16 h-16 rounded-full border-4 border-gray-200 dark:border-gray-800"
             style={{
               animation: 'spin 2s linear infinite'
             }}
           >
             <div 
-              className="absolute top-0 left-1/2 w-4 h-4 -mt-1 -ml-2 rounded-full bg-primary-600 dark:bg-primary-500"
+              className="absolute top-0 left-1/2 w-4 h-4 -mt-1 -ml-2 rounded-full bg-primary-500 dark:bg-primary-400"
               style={{
                 animation: 'pulse 1s ease-in-out infinite'
               }}
@@ -41,7 +54,7 @@ const PageLoader: React.FC = () => {
           {/* Center logo */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div
-              className="w-8 h-8 rounded-full bg-white dark:bg-secondary-900 shadow-md flex items-center justify-center"
+              className="w-8 h-8 rounded-full bg-white dark:bg-true-black shadow-md flex items-center justify-center"
               style={{
                 animation: 'breathe 2s ease-in-out infinite'
               }}
@@ -52,7 +65,7 @@ const PageLoader: React.FC = () => {
         </div>
         
         <p
-          className="mt-4 text-sm text-secondary-600 dark:text-secondary-400"
+          className="mt-4 text-sm text-gray-600 dark:text-gray-400"
           style={{
             opacity: isVisible ? 1 : 0,
             transition: 'opacity 0.5s ease-in-out',
@@ -62,9 +75,9 @@ const PageLoader: React.FC = () => {
           Loading...
         </p>
         
-        {/* Loading bar */}
+        {/* Loading bar with progress animation */}
         <div 
-          className="mt-4 w-32 h-1 bg-secondary-200 dark:bg-secondary-800 rounded-full overflow-hidden"
+          className="mt-4 w-32 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? 'translateY(0)' : 'translateY(5px)',
@@ -73,9 +86,10 @@ const PageLoader: React.FC = () => {
           }}
         >
           <div 
-            className="h-full bg-primary-600 dark:bg-primary-500 rounded-full"
+            className="h-full bg-primary-500 dark:bg-primary-400 rounded-full"
             style={{
-              animation: 'loading-bar 1s ease-in-out infinite'
+              width: `${progress}%`,
+              transition: 'width 0.3s ease-out'
             }}
           />
         </div>
@@ -107,15 +121,6 @@ const PageLoader: React.FC = () => {
           }
           50% {
             transform: scale(1.1);
-          }
-        }
-
-        @keyframes loading-bar {
-          0% {
-            width: 0%;
-          }
-          100% {
-            width: 100%;
           }
         }
       `}</style>

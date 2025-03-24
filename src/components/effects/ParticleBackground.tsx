@@ -1,3 +1,4 @@
+// src/components/effects/ParticleBackground.tsx
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 
@@ -49,24 +50,17 @@ const ParticleBackground: React.FC = () => {
       initParticles();
     };
     
-    // Initialize particles
+    // Initialize particles with blue theme
     const initParticles = () => {
       particles = [];
-      const numberOfParticles = Math.min(Math.floor(window.innerWidth * window.innerHeight / 10000), 120);
+      const numberOfParticles = Math.min(Math.floor(window.innerWidth * window.innerHeight / 15000), 100);
       
       // Determine primary color based on theme
       const isDark = resolvedTheme === 'dark';
-      const primaryColorBase = theme === 'purple' 
-        ? isDark ? '168, 85, 247' : '168, 85, 247'
-        : theme === 'blue'
-          ? isDark ? '59, 130, 246' : '59, 130, 246'
-          : isDark ? '99, 102, 241' : '99, 102, 241';
-        
-      const secondaryColorBase = theme === 'purple'
-        ? isDark ? '244, 114, 182' : '244, 114, 182'
-        : theme === 'blue'
-          ? isDark ? '245, 158, 11' : '245, 158, 11'
-          : isDark ? '16, 185, 129' : '16, 185, 129';
+      
+      // Using the blue-focused color palette with theme awareness
+      const primaryColorBase = isDark ? '0, 115, 255' : '28, 100, 242'; // Blue (darker in light mode)
+      const secondaryColorBase = isDark ? '14, 165, 233' : '56, 189, 248'; // Light blue (brighter in light mode)
       
       for (let i = 0; i < numberOfParticles; i++) {
         // Randomly choose between primary and accent colors
@@ -75,12 +69,12 @@ const ParticleBackground: React.FC = () => {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          size: Math.random() * 4 + 1,
-          speedX: (Math.random() - 0.5) * 0.3,
-          speedY: (Math.random() - 0.5) * 0.3,
-          opacity: Math.random() * 0.5 + 0.1,
-          color: `rgba(${colorBase}, ${Math.random() * 0.3 + 0.1})`,
-          glow: Math.random() > 0.8 ? 3 + Math.random() * 5 : 0, // Some particles glow
+          size: Math.random() * 3 + 1, // Smaller for minimalist design
+          speedX: (Math.random() - 0.5) * 0.2, // Slower movement for elegant effect
+          speedY: (Math.random() - 0.5) * 0.2,
+          opacity: Math.random() * 0.3 + 0.1,
+          color: `rgba(${colorBase}, ${Math.random() * 0.2 + 0.1})`,
+          glow: Math.random() > 0.9 ? 3 + Math.random() * 3 : 0, // Some particles glow
         });
       }
     };
@@ -113,8 +107,8 @@ const ParticleBackground: React.FC = () => {
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance > 200) {
-          particle.speedX += (dx / distance) * 0.0003;
-          particle.speedY += (dy / distance) * 0.0003;
+          particle.speedX += (dx / distance) * 0.0001;
+          particle.speedY += (dy / distance) * 0.0001;
         }
         
         // Add slight random movement
@@ -124,7 +118,7 @@ const ParticleBackground: React.FC = () => {
         }
         
         // Maximum speed limit
-        const maxSpeed = 0.5;
+        const maxSpeed = 0.3;
         const speed = Math.sqrt(particle.speedX * particle.speedX + particle.speedY * particle.speedY);
         if (speed > maxSpeed) {
           particle.speedX = (particle.speedX / speed) * maxSpeed;
@@ -139,15 +133,15 @@ const ParticleBackground: React.FC = () => {
           const maxDistance = 200;
           
           if (distance < maxDistance) {
-            const influence = (maxDistance - distance) / maxDistance * 0.05;
+            const influence = (maxDistance - distance) / maxDistance * 0.03;
             particle.speedX += (dx / distance) * influence;
             particle.speedY += (dy / distance) * influence;
             
             // Limit speed after mouse influence
             const speed = Math.sqrt(particle.speedX * particle.speedX + particle.speedY * particle.speedY);
-            if (speed > 1) {
-              particle.speedX = (particle.speedX / speed) * 1;
-              particle.speedY = (particle.speedY / speed) * 1;
+            if (speed > 0.8) {
+              particle.speedX = (particle.speedX / speed) * 0.8;
+              particle.speedY = (particle.speedY / speed) * 0.8;
             }
           }
         }
@@ -159,16 +153,16 @@ const ParticleBackground: React.FC = () => {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          const maxDistance = 150;
+          const maxDistance = 120; // Shorter connections for cleaner look
           
           if (distance < maxDistance) {
             // Choose color based on both particles
-            const [r1, g1, b1] = particles[i].color.match(/\d+/g)?.map(Number) || [99, 102, 241];
-            const [r2, g2, b2] = particles[j].color.match(/\d+/g)?.map(Number) || [99, 102, 241];
+            const [r1, g1, b1] = particles[i].color.match(/\d+/g)?.map(Number) || [0, 115, 255];
+            const [r2, g2, b2] = particles[j].color.match(/\d+/g)?.map(Number) || [0, 115, 255];
             const r = Math.floor((r1 + r2) / 2);
             const g = Math.floor((g1 + g2) / 2);
             const b = Math.floor((b1 + b2) / 2);
-            const opacity = (maxDistance - distance) / maxDistance * 0.2;
+            const opacity = (maxDistance - distance) / maxDistance * 0.15;
             
             connectionLines.push({
               fromX: particles[i].x,
@@ -190,7 +184,7 @@ const ParticleBackground: React.FC = () => {
       // First draw connection lines for better layering
       for (const line of connectionLines) {
         ctx.strokeStyle = line.color;
-        ctx.lineWidth = 0.6;
+        ctx.lineWidth = 0.5; // Thinner lines for minimalist design
         ctx.beginPath();
         ctx.moveTo(line.fromX, line.fromY);
         ctx.lineTo(line.toX, line.toY);
@@ -201,7 +195,7 @@ const ParticleBackground: React.FC = () => {
       for (const particle of particles) {
         // Draw glow effect for some particles
         if (particle.glow > 0) {
-          const glowColor = particle.color.replace(/[\d.]+\)$/g, `${particle.opacity * 0.5})`);
+          const glowColor = particle.color.replace(/[\d.]+\)$/g, `${particle.opacity * 0.4})`);
           ctx.shadowColor = glowColor;
           ctx.shadowBlur = particle.glow;
         } else {
@@ -257,7 +251,7 @@ const ParticleBackground: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
-      style={{ opacity: 0.4 }}
+      style={{ opacity: 0.3 }} // Slightly more visible than before
     />
   );
 };

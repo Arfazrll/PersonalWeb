@@ -1,3 +1,4 @@
+// src/components/layout/Layout.tsx
 import { useEffect, ReactNode, useState } from 'react';
 import { useRouter } from 'next/router';
 import Header from './Header';
@@ -13,11 +14,6 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-// CSS transition helper that respects reduced motion preferences
-const getTransition = (duration: number = 0.3, type: string = 'ease-out') => {
-  return `all ${duration}s ${type}`;
-};
-
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -31,6 +27,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   // Handle client-side mounting
   useEffect(() => {
     setMounted(true);
+    
+    // Force scroll to top initially
+    window.scrollTo(0, 0);
     
     // Check if user has visited before
     const hasVisited = sessionStorage.getItem('hasVisited');
@@ -66,6 +65,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       setLoading(true);
       setPageTransition(true);
       setRouteKey(router.asPath);
+      // Critical: Force scroll to top on route changes
+      window.scrollTo(0, 0);
     };
     
     const handleComplete = () => {
@@ -97,7 +98,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         const targetElement = document.querySelector(target.hash);
         if (targetElement) {
           window.scrollTo({
-            top: targetElement.getBoundingClientRect().top + window.scrollY - 100,
+            top: targetElement.getBoundingClientRect().top + window.scrollY - 80,
             behavior: 'smooth'
           });
           
@@ -117,7 +118,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   // Prefetch route data for smoother transitions
   useEffect(() => {
     router.prefetch('/');
-    // Add other routes if you have them
   }, [router]);
 
   return (
@@ -137,7 +137,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Scroll Progress Bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-transparent z-[9999]">
         <div 
-          className="h-full bg-primary-600 dark:bg-primary-500 transition-all duration-300 ease-out"
+          className="h-full bg-primary-600 dark:bg-primary-400 transition-all duration-300 ease-out"
           style={{ width: `${scrollPercentage}%` }}
         />
       </div>
@@ -151,7 +151,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               key={routeKey}
               className={`${pageTransition ? 'opacity-0 -translate-y-4' : 'opacity-100 translate-y-0'}`}
               style={{ 
-                transition: getTransition(0.3, 'cubic-bezier(0.175, 0.885, 0.32, 1.275)') 
+                transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)' 
               }}
             >
               {children}

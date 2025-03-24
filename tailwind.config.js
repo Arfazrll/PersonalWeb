@@ -17,18 +17,19 @@ const tailwindConfig = {
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
+        // Updated blue-focused color palette
         primary: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-          950: '#1e1b4b',
+          50: '#e6f1ff',
+          100: '#cce3ff',
+          200: '#99c7ff',
+          300: '#66abff',
+          400: '#338fff',
+          500: '#0073ff', // Main blue
+          600: '#005cd9',
+          700: '#0046b3',
+          800: '#00318c',
+          900: '#001b66',
+          950: '#000e33',
         },
         secondary: {
           50: '#f8fafc',
@@ -44,50 +45,36 @@ const tailwindConfig = {
           950: '#020617',
         },
         accent: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
-          950: '#022c22',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9', // Lighter blue accent
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+          950: '#082f49',
         },
-        // New color - purple accent
-        purple: {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7e22ce',
-          800: '#6b21a8',
-          900: '#581c87',
-          950: '#3b0764',
-        },
-        // New color - blue accent
-        blue: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-          950: '#172554',
+        // Cleaner grayscale for modern minimalist look
+        gray: {
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#9ca3af',
+          500: '#6b7280',
+          600: '#4b5563',
+          700: '#374151',
+          800: '#1f2937',
+          900: '#111827',
+          950: '#030712',
         },
         // True black for dark mode
         true: {
           black: '#000000',
-          dark: '#121212',
+          dark: '#0a0a0a',
         },
       },
       animation: {
@@ -102,11 +89,11 @@ const tailwindConfig = {
         'float': 'float 6s ease-in-out infinite',
         'spin-slow': 'spin 8s linear infinite',
         'breathe': 'breathe 4s ease-in-out infinite',
-        'shimmer': 'shimmer 2.5s infinite',
-        'flip': 'flip 2s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite',
-        'wave': 'wave 2.5s ease-in-out infinite',
-        'orbit': 'orbit 12s linear infinite',
+        // New animations for modern minimalist design
+        'gradient-flow': 'gradientFlow 8s ease infinite',
+        'fade-slide-up': 'fadeSlideUp 0.5s ease-out forwards',
+        'shine': 'shine 2.5s infinite',
+        'subtle-bounce': 'subtleBounce 4s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -129,73 +116,42 @@ const tailwindConfig = {
           '0%': { transform: 'translateX(-20px)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
         },
-        typing: {
-          'from': { width: '0' },
-          'to': { width: '100%' }
-        },
-        'blink-caret': {
-          'from, to': { borderColor: 'transparent' },
-          '50%': { borderColor: 'currentColor' }
-        },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
+          '50%': { transform: 'translateY(-10px)' }, // More subtle for minimalist design
         },
-        breathe: {
-          '0%, 100%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.1)' },
+        subtleBounce: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' }, // Very subtle bounce
         },
-        shimmer: {
-          '0%': { backgroundPosition: '-500px 0' },
-          '100%': { backgroundPosition: '500px 0' },
+        gradientFlow: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
         },
-        flip: {
-          '0%, 100%': { transform: 'rotateY(0deg)' },
-          '50%': { transform: 'rotateY(180deg)' },
+        fadeSlideUp: {
+          'from': { opacity: '0', transform: 'translateY(10px)' },
+          'to': { opacity: '1', transform: 'translateY(0)' },
         },
-        glow: {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(99, 102, 241, 0.5)' },
-          '50%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.8)' },
-        },
-        wave: {
-          '0%': { transform: 'rotate(0deg)' },
-          '10%': { transform: 'rotate(14deg)' },
-          '20%': { transform: 'rotate(-8deg)' },
-          '30%': { transform: 'rotate(14deg)' },
-          '40%': { transform: 'rotate(-4deg)' },
-          '50%': { transform: 'rotate(10deg)' },
-          '60%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(0deg)' },
-        },
-        orbit: {
-          '0%': { transform: 'rotate(0deg) translateX(100px) rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg) translateX(100px) rotate(-360deg)' },
+        shine: {
+          '0%': { backgroundPosition: '-100% 0' },
+          '100%': { backgroundPosition: '200% 0' },
         },
       },
       boxShadow: {
-        'hover': '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-        'glow': '0 0 15px rgba(99, 102, 241, 0.5)',
-        'glow-strong': '0 0 25px rgba(99, 102, 241, 0.7)',
-        'neon': '0 0 5px theme("colors.primary.400"), 0 0 20px theme("colors.primary.500")',
-        'inner-glow': 'inset 0 0 15px 5px rgba(99, 102, 241, 0.15)',
-      },
-      transitionProperty: {
-        'height': 'height',
-        'spacing': 'margin, padding',
-        'width': 'width',
-        'transform': 'transform',
+        'hover': '0 10px 25px -3px rgba(0, 115, 255, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'card': '0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1)',
+        'card-hover': '0 10px 20px rgba(0,0,0,0.05), 0 6px 6px rgba(0,0,0,0.1)',
+        'glow': '0 0 15px rgba(0, 115, 255, 0.5)',
+        'glow-light': '0 0 10px rgba(0, 115, 255, 0.2)',
+        'inner-glow': 'inset 0 0 15px 5px rgba(0, 115, 255, 0.15)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'mesh-pattern': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 40 40\'%3E%3Cg fill-rule=\'evenodd\'%3E%3Cg fill=\'%236366f1\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 20.83l2.83-2.83 1.41 1.41L1.41 22.24H0v-1.41zM0 3.07l2.83-2.83 1.41 1.41L1.41 4.48H0V3.07zm12.95 8.23l-1.41-1.41L18.36 3.07l1.41 1.41-6.82 6.82zM12.95 38.59l-1.41-1.41 6.82-6.82 1.41 1.41-6.82 6.82zM30.71 29.77l-6.82 6.82 -1.41-1.41 6.82-6.82 1.41 1.41z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-      },
-      backdropBlur: {
-        'xs': '2px',
-      },
-      transitionDuration: {
-        '2000': '2000ms',
-        '3000': '3000ms',
+        'mesh-pattern': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 40 40\'%3E%3Cg fill-rule=\'evenodd\'%3E%3Cg fill=\'%230073ff\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 20.83l2.83-2.83 1.41 1.41L1.41 22.24H0v-1.41zM0 3.07l2.83-2.83 1.41 1.41L1.41 4.48H0V3.07zm12.95 8.23l-1.41-1.41L18.36 3.07l1.41 1.41-6.82 6.82zM12.95 38.59l-1.41-1.41 6.82-6.82 1.41 1.41-6.82 6.82zM30.71 29.77l-6.82 6.82 -1.41-1.41 6.82-6.82 1.41 1.41z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+        'grid-pattern': 'linear-gradient(to right, rgba(0, 115, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 115, 255, 0.05) 1px, transparent 1px)',
+        'subtle-dots': 'radial-gradient(rgba(0, 115, 255, 0.1) 1px, transparent 0)',
       },
     },
   },

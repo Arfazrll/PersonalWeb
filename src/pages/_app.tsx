@@ -10,7 +10,18 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   // Ensure we only render animations on the client
   useEffect(() => {
     setDomLoaded(true);
-  }, []);
+    
+    // Force scroll to top when route changes
+    const handleRouteChange = () => {
+      window.scrollTo(0, 0);
+    };
+    
+    router.events.on('routeChangeComplete', handleRouteChange);
+    
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true}>

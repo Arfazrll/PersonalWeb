@@ -7,14 +7,11 @@ import {
   FiArrowDown, 
   FiCode, 
   FiDatabase, 
-  FiCpu, 
-  FiServer, 
-  FiGlobe 
+  FiCpu
 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import Button from '../ui/Button';
 import { personalInfo } from '@/utils/data';
-import { useTheme } from 'next-themes';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import useTypewriter from '@/hooks/useTypewriter';
 import { useParticles } from '@/utils/particleGenerator';
@@ -35,7 +32,7 @@ const ProfileCard = ({ isRevealed }: { isRevealed: boolean }) => {
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
-      const maxRotation = 10; // Max rotation in degrees
+      const maxRotation = 8; // Reduced for more subtle effect
       const distanceX = e.clientX - centerX;
       const distanceY = e.clientY - centerY;
       
@@ -90,8 +87,8 @@ const ProfileCard = ({ isRevealed }: { isRevealed: boolean }) => {
         }}
       >
         <div className="w-full aspect-square rounded-full bg-gradient-to-br from-primary-500 to-accent-500 p-1.5 rotating-container shadow-lg dark:shadow-primary-500/20">
-          <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-true-dark p-3 backdrop-blur-sm">
-            <div className="w-full h-full rounded-full overflow-hidden relative bg-secondary-100 dark:bg-secondary-800">
+          <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-true-black p-3 backdrop-blur-sm">
+            <div className="w-full h-full rounded-full overflow-hidden relative bg-gray-100 dark:bg-gray-800">
               <div className="absolute inset-0 rounded-full overflow-hidden flex items-center justify-center">
                 {/* Profile image placeholder */}
                 <div className="w-full h-full bg-gradient-to-br from-primary-500/30 to-accent-500/30 flex items-center justify-center">
@@ -123,7 +120,7 @@ const ProfileCard = ({ isRevealed }: { isRevealed: boolean }) => {
         
         {/* Floating badges - accessible with appropriate ARIA attributes */}
         <motion.div 
-          className="badge absolute top-5 right-0 bg-white dark:bg-secondary-800 rounded-lg p-3 shadow-lg dark:shadow-secondary-900/50"
+          className="badge absolute top-5 right-0 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-lg dark:shadow-gray-900/50"
           initial={{ opacity: 0, y: 20, x: 20 }}
           animate={{ opacity: isRevealed ? 1 : 0, y: isRevealed ? 0 : 20, x: isRevealed ? 0 : 20 }}
           transition={{ duration: 0.5, delay: 0.6 }}
@@ -136,14 +133,14 @@ const ProfileCard = ({ isRevealed }: { isRevealed: boolean }) => {
               <FiCpu className="text-primary-600 dark:text-primary-400" size={16} />
             </div>
             <div>
-              <span className="text-xs text-secondary-500 dark:text-secondary-400 block">Specializing in</span>
-              <h3 className="font-semibold text-secondary-900 dark:text-white text-sm">AI & Big Data</h3>
+              <span className="text-xs text-gray-500 dark:text-gray-400 block">Specializing in</span>
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">AI & Big Data</h3>
             </div>
           </div>
         </motion.div>
         
         <motion.div 
-          className="badge absolute -bottom-2 -left-2 bg-white dark:bg-secondary-800 rounded-lg p-3 shadow-lg dark:shadow-secondary-900/50"
+          className="badge absolute -bottom-2 -left-2 bg-white dark:bg-gray-800 rounded-lg p-3 shadow-lg dark:shadow-gray-900/50"
           initial={{ opacity: 0, y: 20, x: -20 }}
           animate={{ opacity: isRevealed ? 1 : 0, y: isRevealed ? 0 : 20, x: isRevealed ? 0 : -20 }}
           transition={{ duration: 0.5, delay: 0.8 }}
@@ -153,11 +150,11 @@ const ProfileCard = ({ isRevealed }: { isRevealed: boolean }) => {
         >
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-full bg-accent-100 dark:bg-accent-900/30">
-              <FiGlobe className="text-accent-600 dark:text-accent-400" size={16} />
+              <FiDatabase className="text-accent-600 dark:text-accent-400" size={16} />
             </div>
             <div>
-              <span className="text-xs text-secondary-500 dark:text-secondary-400 block">Achievement</span>
-              <h3 className="font-semibold text-secondary-900 dark:text-white text-sm">Top 15 in Data Mining</h3>
+              <span className="text-xs text-gray-500 dark:text-gray-400 block">Achievement</span>
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">Top 15 in Data Mining</h3>
             </div>
           </div>
         </motion.div>
@@ -232,9 +229,7 @@ const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isRevealed, setIsRevealed] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const { resolvedTheme } = useTheme();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const isDarkMode = resolvedTheme === 'dark';
 
   // Enhanced typing phrases with emojis and tech specifics
   const phrases = useMemo(() => [
@@ -254,7 +249,7 @@ const Hero = () => {
   });
 
   // Custom hook for generating particles
-  const particles = useParticles(prefersReducedMotion ? 10 : 30, prefersReducedMotion);
+  const particles = useParticles(prefersReducedMotion ? 10 : 25, prefersReducedMotion);
 
   // Intersection observer for reveal animations
   useEffect(() => {
@@ -316,9 +311,7 @@ const Hero = () => {
     <section 
       id="home" 
       ref={heroRef}
-      className={`min-h-screen flex items-center relative overflow-hidden pt-24 pb-12 ${
-        isDarkMode ? 'dark-theme-hero' : 'light-theme-hero'
-      }`}
+      className={`min-h-screen flex items-center relative overflow-hidden pt-24 pb-12 bg-white dark:bg-true-black`}
       aria-labelledby="hero-heading"
     >
       {/* Animated Particle Background */}
@@ -326,17 +319,17 @@ const Hero = () => {
       
       {/* Background Gradients */}
       <div 
-        className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary-400/20 dark:bg-primary-600/10 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"
+        className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary-400/10 dark:bg-primary-600/10 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"
         aria-hidden="true"
       ></div>
       <div 
-        className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-accent-400/20 dark:bg-accent-600/10 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3"
+        className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-accent-400/10 dark:bg-accent-600/10 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3"
         aria-hidden="true"
       ></div>
       
       {/* Background Mesh Pattern */}
       <div 
-        className="absolute inset-0 bg-mesh-pattern opacity-10 dark:opacity-5 -z-10"
+        className="absolute inset-0 bg-mesh-pattern opacity-5 dark:opacity-5 -z-10"
         aria-hidden="true"
       ></div>
       
@@ -345,19 +338,19 @@ const Hero = () => {
           {/* Content */}
           <motion.div
             className={`lg:col-span-7 content-area ${isRevealed ? 'is-revealed' : ''}`}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: isRevealed ? 1 : 0, y: isRevealed ? 0 : 30 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isRevealed ? 1 : 0, y: isRevealed ? 0 : 20 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="space-y-6">
               <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                <span className="text-secondary-900 dark:text-white block">Hi, I&apos;m </span>
-                <span className="text-gradient animated-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400">
+                <span className="text-gray-900 dark:text-white block">Hi, I&apos;m </span>
+                <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400">
                   Syahril Arfian
                 </span>
               </h1>
               
-              <h2 className="text-2xl md:text-3xl font-medium text-secondary-700 dark:text-secondary-300">
+              <h2 className="text-2xl md:text-3xl font-medium text-gray-700 dark:text-gray-300">
                 <span>{personalInfo.title}</span>
                 <div className="mt-2 h-10 flex items-center" aria-live="polite">
                   <span className="text-primary-600 dark:text-primary-400">{typedText}</span>
@@ -365,7 +358,7 @@ const Hero = () => {
                 </div>
               </h2>
               
-              <p className="text-lg text-secondary-600 dark:text-secondary-400 max-w-2xl leading-relaxed">
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
                 {personalInfo.about.split('.')[0] + '.'}
               </p>
               
@@ -461,12 +454,6 @@ const Hero = () => {
                   label="Machine Learning" 
                   delay="delay-300"
                 />
-                
-                <SkillPill 
-                  icon={<FiServer size={16} />}
-                  label="IoT" 
-                  delay="delay-400"
-                />
               </div>
             </div>
           </motion.div>
@@ -483,15 +470,15 @@ const Hero = () => {
           transition={{ duration: 0.3 }}
           aria-hidden="true"
         >
-          <span className="text-sm text-secondary-500 dark:text-secondary-400 mb-2 animate-bounce-slow">
+          <span className="text-sm text-gray-500 dark:text-gray-400 mb-2 animate-bounce-slow">
             Scroll Down
           </span>
           <button 
             onClick={scrollToAbout}
-            className="w-10 h-10 rounded-full border-2 border-secondary-300 dark:border-secondary-700 flex items-center justify-center hover:border-primary-500 dark:hover:border-primary-400 transition-colors duration-300"
+            className="w-10 h-10 rounded-full border-2 border-gray-300 dark:border-gray-700 flex items-center justify-center hover:border-primary-500 dark:hover:border-primary-400 transition-colors duration-300"
             aria-label="Scroll to About section"
           >
-            <FiArrowDown className="text-secondary-400 dark:text-secondary-500" size={18} />
+            <FiArrowDown className="text-gray-400 dark:text-gray-500" size={18} />
           </button>
         </motion.div>
       </div>
@@ -523,15 +510,15 @@ const Hero = () => {
         
         @keyframes floatParticle {
           0% { transform: translate(0, 0); }
-          25% { transform: translate(20px, 20px); }
-          50% { transform: translate(0, 40px); }
-          75% { transform: translate(-20px, 20px); }
+          25% { transform: translate(10px, 10px); }
+          50% { transform: translate(0, 20px); }
+          75% { transform: translate(-10px, 10px); }
           100% { transform: translate(0, 0); }
         }
         
         @keyframes pulseParticle {
           0%, 100% { opacity: 0.1; transform: scale(1); }
-          50% { opacity: 0.3; transform: scale(1.3); }
+          50% { opacity: 0.2; transform: scale(1.1); }
         }
         
         .animate-blink {
@@ -546,18 +533,6 @@ const Hero = () => {
         .hover-effect {
           position: relative;
           overflow: hidden;
-        }
-        
-        .dark-theme-hero {
-          background-color: #000000;
-          background-image: radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 25%),
-                            radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.08) 0%, transparent 25%);
-        }
-        
-        .light-theme-hero {
-          background-color: #ffffff;
-          background-image: radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 25%),
-                            radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 25%);
         }
 
         /* Animation for the orbiting dot */

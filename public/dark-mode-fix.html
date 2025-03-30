@@ -1,0 +1,53 @@
+<style id="dark-mode-override">
+    .dark #about {
+      background-color: #000000 !important;
+    }
+    
+    .dark body, 
+    .dark #__next, 
+    .dark [class*="dark:bg-black"],
+    .dark [class*="dark:bg-secondary-900"] {
+      background-color: #000000 !important;
+    }
+  </style>
+  
+  <script>
+    // Add this script to the head of your document
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create the style element
+      var style = document.createElement('style');
+      style.id = 'dark-mode-direct-fix';
+      style.textContent = `
+        .dark #about {
+          background-color: #000000 !important;
+        }
+        
+        .dark [class*="dark:bg-black"],
+        .dark [class*="dark:bg-secondary-900"] {
+          background-color: #000000 !important;
+        }
+      `;
+      
+      // Append it to the head
+      document.head.appendChild(style);
+      
+      // Monitor for theme changes
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'class' && 
+              document.documentElement.classList.contains('dark')) {
+            document.querySelectorAll('#about, [class*="dark:bg-black"], [class*="dark:bg-secondary-900"]')
+              .forEach(function(element) {
+                element.style.backgroundColor = '#000000';
+              });
+          }
+        });
+      });
+      
+      // Start observing the html element for class changes
+      observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class'] 
+      });
+    });
+  </script>

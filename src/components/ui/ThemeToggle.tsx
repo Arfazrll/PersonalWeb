@@ -138,7 +138,7 @@ const ThemeToggle: React.FC = () => {
       
       {/* Dropdown menu with enhanced animations */}
       <motion.div
-        className="absolute right-0 mt-2 w-56 bg-white dark:bg-secondary-800 rounded-xl shadow-xl overflow-hidden z-50 border border-secondary-200 dark:border-secondary-700"
+        className="absolute right-0 mt-2 w-56 bg-white dark:bg-true-black rounded-xl shadow-xl overflow-hidden z-50 border border-secondary-200 dark:border-secondary-700"
         initial={{ opacity: 0, scale: 0.9, y: -5 }}
         animate={{
           opacity: isOpen ? 1 : 0,

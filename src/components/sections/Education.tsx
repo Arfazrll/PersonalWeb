@@ -36,7 +36,7 @@ const Education = () => {
   };
 
   return (
-    <section id="education" className="py-20 bg-secondary-50 dark:bg-secondary-900/30">
+    <section id="education" className="py-20 bg-secondary-50 dark:bg-true-black">
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <motion.div

@@ -108,10 +108,10 @@ const Skills = () => {
 
   return (
     <section 
-      id="skills" 
-      ref={sectionRef}
-      className="py-20 bg-white dark:bg-secondary-900 relative overflow-hidden"
-    >
+       id="skills" 
+        ref={sectionRef}
+        className="py-20 bg-white dark:bg-true-black relative overflow-hidden"
+      >
       {/* Background decorations */}
       <div className="absolute top-0 left-0 -z-10 w-72 h-72 bg-primary-500/5 dark:bg-primary-500/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 -z-10 w-96 h-96 bg-accent-500/5 dark:bg-accent-500/5 rounded-full blur-3xl"></div>

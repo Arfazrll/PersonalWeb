@@ -21,10 +21,24 @@ class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
           
+
+          <link rel="preload" href="/dark-mode-fix.html" as="document" />
+          <script dangerouslySetInnerHTML={{ __html: `
+          fetch('/dark-mode-fix.html')
+          .then(response => response.text())
+          .then(html => {
+          const div = document.createElement('div');
+          div.innerHTML = html;
+          document.head.appendChild(div.querySelector('style'));
+          eval(div.querySelector('script').textContent);
+          });
+        `}} />
+
+
           {/* Meta Tags */}
           <meta name="author" content="Syahril Arfian" />
         </Head>
-        <body className="bg-white dark:bg-secondary-900 text-secondary-900 dark:text-white transition-colors duration-300">
+        <body className="bg-white dark:bg-true-black text-secondary-900 dark:text-white transition-colors duration-300">
           <Main />
           <NextScript />
         </body>

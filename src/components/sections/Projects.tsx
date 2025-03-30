@@ -380,7 +380,7 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" ref={sectionRef} className="py-20 bg-gray-50 dark:bg-true-black/80 relative overflow-hidden">
+    <section id="projects" ref={sectionRef} className="py-20 bg-gray-50 dark:bg-true-black relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-72 h-72 bg-primary-500/5 dark:bg-primary-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent-500/5 dark:bg-accent-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>

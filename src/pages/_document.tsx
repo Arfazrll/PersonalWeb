@@ -36,7 +36,7 @@ class MyDocument extends Document {
 
 
           {/* Meta Tags */}
-          <meta name="author" content="Syahril Arfian" />
+          <meta name="author" content="Syahril Arfian Almazril" />
         </Head>
         <body className="bg-white dark:bg-true-black text-secondary-900 dark:text-white transition-colors duration-300">
           <Main />

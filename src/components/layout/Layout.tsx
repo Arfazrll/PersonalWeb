@@ -8,7 +8,7 @@ import ParticleBackground from '../effects/ParticleBackground';
 import ScrollToTop from '../ui/ScrollToTop';
 import PageLoader from '../ui/PageLoader';
 import { useScrollIndicator } from '@/hooks/useScrollIndicator';
-import SplashScreen from '../ui/SplashScreen';
+
 
 interface LayoutProps {
   children: ReactNode;
@@ -122,9 +122,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <>
-      {/* Splash Screen with CSS transition */}
-      {showSplash && <SplashScreen />}
-
       {/* Page Loader with CSS transition */}
       {loading && !showSplash && <PageLoader />}
 

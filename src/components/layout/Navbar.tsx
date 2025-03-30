@@ -177,7 +177,7 @@ const EnhancedNavbar = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-accent-600 dark:from-primary-400 dark:to-accent-400">
-                  Syahril
+                  Home 
                 </span>
                 <span className={`text-xs ${
                   isDark ? 'text-gray-400' : 'text-gray-600'
